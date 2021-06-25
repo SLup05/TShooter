@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 119785b0c1362f941a4b952b85da0c36
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - EnemLineTriLeftBulletPrefab: {instanceID: 0}
+  - EnemLineTriRightBulletPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
