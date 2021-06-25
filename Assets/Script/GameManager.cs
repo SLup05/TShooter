@@ -14,8 +14,11 @@ public class GameManager : MonoBehaviour
     public float EnemBeamTriSpeed { get; set; }
     public float EnemBeamTriBulletSpeed { get; set; }
 
-    public Vector2 MaxPos { get; set; }
-    public Vector2 MinPos { get; set; }
+    public Vector2 MaxPos { get; private set; }
+    public Vector2 MinPos { get; private set; }
+
+    public Vector2 PlMaxPos { get; set; }
+    public Vector2 PlMinPos { get; set; }
     public float BulletSpeed { get; set; }
 
     public bool EnemTriSpawnLeft { get; set; }
@@ -31,10 +34,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text ScoreText = null;
     [SerializeField] private Text HighScoreText = null;
 
+    private BackGroundMove backGroundMove = null;
+
     void Start()
     {
-        MaxPos = new Vector2(2.5f, -2.2f);
-        MinPos = new Vector2(2.5f, -2.2f);
+        backGroundMove = FindObjectOfType<BackGroundMove>();
+
+        MaxPos = new Vector2(2f, 7f);
+        MinPos = new Vector2(-2f, -7f);
+
+
+        PlMaxPos = new Vector2(2.5f, -2.2f);
+        PlMinPos = new Vector2(2.5f, -2.2f);
 
         PlSpeed = 1.2f;
         PlNormalSpeed = 1.5f;
@@ -47,7 +58,7 @@ public class GameManager : MonoBehaviour
         EnemBeamTriBulletSpeed = 17f;
 
         EnemTriSpawnLeft = true;
-        StartCoroutine(SpawnEnemLineTri());
+        StartCoroutine(Infinity());
     }
 
     // Update is called once per frame
@@ -108,8 +119,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SpawnEnemLineTri()
     {
-        for(int i = 0; i < 5; i++)
-        {
+        
         GameObject EnemLineTri;
 
         float posX;
@@ -121,9 +131,7 @@ public class GameManager : MonoBehaviour
 
         Instantiate(EnemLineTriPrefab, new Vector2(posX, posY), Quaternion.identity);
 
-        yield return new WaitForSeconds(1.5f);        
-
-        }
+        yield return new WaitForSeconds(1.5f);
 
     }
 
@@ -140,5 +148,129 @@ public class GameManager : MonoBehaviour
         }        
     }
 
+    private IEnumerator Infinity()
+    {
+        while(true)
+        {
+            StartCoroutine(SpawnEnemTri());
+            StartCoroutine(SpawnEnemTri());
 
-}
+            for(int i = 0; i < 5; i++)
+
+            { 
+             StartCoroutine(SpawnEnemLineTri());
+            }
+
+            for(int i = 0; i < 5; i++)
+            {
+                StartCoroutine(SpawnEnemBeamTri());
+                StartCoroutine(SpawnEnemTri());
+                yield return new WaitForSeconds(1f);
+            }
+
+        }
+    }
+
+    /*private IEnumerator StageOne()
+    {
+        StartCoroutine(SpawnEnemTri());
+        yield return new WaitForSeconds(0.25f);
+        StartCoroutine(SpawnEnemTri());
+        yield return new WaitForSeconds(0.25f);
+
+        StartCoroutine(SpawnEnemTri());
+        StartCoroutine(SpawnEnemTri());
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(SpawnEnemTri());
+        StartCoroutine(SpawnEnemTri());
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(SpawnEnemTri());
+        StartCoroutine(SpawnEnemTri());
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(SpawnEnemTri());
+        StartCoroutine(SpawnEnemTri());
+
+        //HARD
+        yield return new WaitForSeconds(5f);
+        for (int i = 0; i < 16; i++)
+        {
+            StartCoroutine(SpawnEnemTri());
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield return new WaitForSeconds(2f);
+        
+        yield return new WaitForSeconds(5f);
+        for(int i = 0; i < 3; i++)
+        {
+            StartCoroutine(SpawnEnemLineTri());
+            yield return new WaitForSeconds(1f);
+            StartCoroutine(SpawnEnemTri());
+            yield return new WaitForSeconds(1f);
+        }
+
+        //HARD
+        yield return new WaitForSeconds(5f);
+        for (int i = 10; i < 10; i++)
+        {
+            StartCoroutine(SpawnEnemLineTri());
+            yield return new WaitForSeconds(1.3f);
+            StartCoroutine(SpawnEnemTri());
+            yield return new WaitForSeconds(0.2f);
+            StartCoroutine(SpawnEnemTri());
+        }
+        yield return new WaitForSeconds(2f);
+
+        for(int i = 0; i < 3; i++)
+        {
+            StartCoroutine(SpawnEnemBeamTri());
+            yield return new WaitForSeconds(0.2f);
+            StartCoroutine(SpawnEnemTri());
+            yield return new WaitForSeconds(0.5f);
+            StartCoroutine(SpawnEnemTri());
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        //HARD
+        yield return new WaitForSeconds(5f);
+        for(int i = 0; i < 5; i++)
+        {
+            StartCoroutine(SpawnEnemBeamTri());
+            yield return new WaitForSeconds(0.2f);
+            StartCoroutine(SpawnEnemLineTri());
+            yield return new WaitForSeconds(1.2f);
+        }
+
+        while(true)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                StartCoroutine(SpawnEnemTri());
+                yield return new WaitForSeconds(0.5f);
+            }
+            yield return new WaitForSeconds(2f);
+
+            for (int i = 10; i < 10; i++)
+            {
+                StartCoroutine(SpawnEnemLineTri());
+                yield return new WaitForSeconds(1.3f);
+                StartCoroutine(SpawnEnemTri());
+                yield return new WaitForSeconds(0.2f);
+                StartCoroutine(SpawnEnemTri());
+            }
+            yield return new WaitForSeconds(2f);
+            for (int i = 0; i < 5; i++)
+            {
+                StartCoroutine(SpawnEnemBeamTri());
+                yield return new WaitForSeconds(0.2f);
+                StartCoroutine(SpawnEnemLineTri());
+                yield return new WaitForSeconds(1.2f);
+            }
+            yield return new WaitForSeconds(2f);
+
+
+        }*/
+
+    }
+
+
+

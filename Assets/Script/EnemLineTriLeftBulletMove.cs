@@ -21,6 +21,10 @@ public class EnemLineTriLeftBulletMove : EnemTriBeamBulletMove
     {
         transform.Translate(Vector2.left * gameManager.EnemLineTriBulletSpeed * Time.deltaTime);
         transform.Translate(Vector2.down * gameManager.EnemLineTriSpeed * Time.deltaTime);
+        if (transform.localPosition.x < gameManager.MinPos.x)
+        {
+            Destroy(gameObject);
+        }
 
     }
 }

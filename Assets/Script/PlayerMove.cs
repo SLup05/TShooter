@@ -12,7 +12,10 @@ public class PlayerMove : MonoBehaviour
     private SpriteRenderer spriteRenderer = null;
 
     private bool CanMove = true;
-    
+
+    private bool CanMoveLeft = true;
+    private bool CanMoveRight = true;
+
 
     public bool MoveLeft = false;
     public bool MoveRight = false; 
@@ -44,11 +47,28 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(MoveLeft)
+        if(gameManager.PlMinPos.x > transform.localPosition.x)
+        {
+            CanMoveLeft = false;
+        }
+        else
+        {
+            CanMoveLeft = true;
+        }
+
+        if (gameManager.PlMaxPos.x < transform.localPosition.x)
+        {
+            CanMoveRight = false;
+        }
+        else
+        {
+            CanMoveRight = true;
+        }
+        if (MoveLeft && CanMoveLeft)
         {
             transform.Translate(Vector2.left*gameManager.PlSpeed*Time.deltaTime);
         }
-        if(MoveRight)
+        if(MoveRight && CanMoveRight)
         {
             transform.Translate(Vector2.right*gameManager.PlSpeed*Time.deltaTime);
         }

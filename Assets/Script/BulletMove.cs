@@ -15,5 +15,9 @@ public class BulletMove : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.up * gameManager.BulletSpeed * Time.deltaTime);
+        if(transform.localPosition.y > gameManager.MaxPos.y)
+        {
+            Destroy(gameObject);
+        }
     }
 }

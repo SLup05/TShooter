@@ -5,7 +5,7 @@ using UnityEngine;
 public class BackGroundMove : MonoBehaviour
 {
     private Vector2 offset = Vector2.zero;
-    [SerializeField] private float speed = -0.1f;
+    [SerializeField] public float speed = -0.1f;
     private MeshRenderer meshRenderer = null;
     void Start()
     {

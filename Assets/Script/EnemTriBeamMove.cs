@@ -31,6 +31,9 @@ public class EnemTriBeamMove : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         animator.Play("EnemBeamTri2ndAnim");
+        yield return new WaitForSeconds(0.5f);
+            Destroy(gameObject);
+        
         yield return null;
 
     }

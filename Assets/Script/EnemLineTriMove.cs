@@ -18,6 +18,10 @@ public class EnemLineTriMove : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.down * gameManager.EnemLineTriSpeed * Time.deltaTime);
+        if (transform.localPosition.y < gameManager.MinPos.y)
+        {
+            Destroy(gameObject);
+        }
     }
     private IEnumerator EnemLineTriFire()
     {
