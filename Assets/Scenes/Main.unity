@@ -712,7 +712,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.306
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1006,6 +1006,7 @@ MonoBehaviour:
   EnemLineTriPrefab: {fileID: 4493759687240870095, guid: fc0f252c08b84d243a9d6e6f5fb8fb6e, type: 3}
   EnemBeamTriPrefab: {fileID: 2834662981438228736, guid: 339e11348eba0ef439eb2483c9a1ab97, type: 3}
   Score: 0
+  HighScore: 0
   PlayerLifeText: {fileID: 730577771}
   ScoreText: {fileID: 2028570420}
   HighScoreText: {fileID: 0}
