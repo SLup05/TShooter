@@ -21,16 +21,20 @@ public class PlayerMove : MonoBehaviour
     public bool MoveRight = false; 
     
     public bool isDodge = false;
-    private float DodgeDelay = 0.7f;
+    private float DodgeDelay = 0.8f;
     
 
-    [SerializeField] private GameObject bulletPrefab = null;
-    [SerializeField] private Transform bulletPosition = null;
+    [SerializeField]
+    private GameObject bulletPrefab = null;
+    [SerializeField] 
+    private Transform bulletPosition = null;
+
     private float fireRate = 0f;
     public bool DoFire = false;
     private bool IfFire = false;
 
     private bool isDamaged = false;
+    
 
 
     void Awake()
@@ -75,14 +79,14 @@ public class PlayerMove : MonoBehaviour
         if(isDodge && CanMove)
         {
             Dodge();
-
         }
         if(DoFire && IfFire && CanMove)
         {
             IfFire = false;
             Fire();
             Invoke("Reload", fireRate);
-        }       
+        }
+        
                 
     }
 
@@ -95,26 +99,40 @@ public class PlayerMove : MonoBehaviour
     //}
 
     private void Fire()
-    {     
-            GameObject bullet;
-            bullet = Instantiate(bulletPrefab, bulletPosition);
-            bullet.transform.SetParent(null);          
+    {
+        PoolOrSpawn();
+    }
+
+    private void PoolOrSpawn()
+    {
+        GameObject bullet;
+        if(gameManager.poolManager.transform.childCount > 0)
+        {
+            bullet = gameManager.poolManager.transform.GetChild(0).gameObject;
+            bullet.transform.position = bulletPosition.position;
+            bullet.SetActive(true);
+        }
+        else
+        {
+            bullet = Instantiate(bulletPrefab, bulletPosition.position, Quaternion.identity);            
+        }
+        bullet.transform.SetParent(null);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isDamaged) return;
+        if (isDodge) return;
         if(collision.CompareTag("Enemy"))
         {
         isDamaged = true;
         StartCoroutine(Damage());
-
         }
     }
 
     private IEnumerator Damage()
     {
-        gameManager.PlayerDeadCheck();
+        StartCoroutine(gameManager.PlayerDeadCheck());
         for (int i = 0; i < 5; i++)
         {
             spriteRenderer.enabled = false;
@@ -147,5 +165,9 @@ public class PlayerMove : MonoBehaviour
     private void Reload()
     {
         IfFire = true;
+    }
+    public void Explosion()
+    {
+        animator.Play("PlayerExpAnim");
     }
 }

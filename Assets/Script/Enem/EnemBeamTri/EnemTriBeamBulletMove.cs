@@ -15,10 +15,20 @@ public class EnemTriBeamBulletMove : MonoBehaviour
     void Update()
     {
         EnemBeamMove();
+        if(gameManager.MinPos.y > transform.position.y)
+        {
+            BeamPooling();
+        }
     }
 
     protected virtual void EnemBeamMove()
     {
         transform.Translate(Vector2.down * gameManager.EnemBeamTriBulletSpeed * Time.deltaTime);
+    }
+
+    private void BeamPooling()
+    {
+        transform.SetParent(gameManager.enemBeamPool.transform);
+        gameObject.SetActive(false);
     }
 }

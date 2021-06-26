@@ -9,7 +9,7 @@ public class BulletMove : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-    }
+    }   
 
     // Update is called once per frame
     void Update()
@@ -17,7 +17,13 @@ public class BulletMove : MonoBehaviour
         transform.Translate(Vector2.up * gameManager.BulletSpeed * Time.deltaTime);
         if(transform.localPosition.y > gameManager.MaxPos.y)
         {
-            Destroy(gameObject);
+            Pooling();
         }
+    }
+
+    public void Pooling()
+    {
+        transform.SetParent(gameManager.poolManager.transform);
+        gameObject.SetActive(false);
     }
 }

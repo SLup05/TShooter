@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemLineTriRightBulletMove : EnemTriBeamBulletMove
+public class EnemLineTriLeftBulletMove : EnemTriBeamBulletMove
 {
     // Start is called before the first frame update
     private GameManager gameManager = null;
@@ -19,12 +19,16 @@ public class EnemLineTriRightBulletMove : EnemTriBeamBulletMove
 
     protected override void EnemBeamMove()
     {
-        transform.Translate(Vector2.right * gameManager.EnemLineTriBulletSpeed * Time.deltaTime);
+        transform.Translate(Vector2.left * gameManager.EnemLineTriBulletSpeed * Time.deltaTime);
         transform.Translate(Vector2.down * gameManager.EnemLineTriSpeed * Time.deltaTime);
-        if (transform.localPosition.x > gameManager.MaxPos.x)
+        if (transform.localPosition.x < gameManager.MinPos.x)
         {
-            Destroy(gameObject);
+            LeftLinePooling();
         }
-
+    }
+    private void LeftLinePooling()
+    {
+        transform.SetParent(gameManager.enemLeftLinePool.transform);
+        gameObject.SetActive(false);
     }
 }
