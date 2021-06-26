@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SpawnEnemTri()
     {
+        yield return new WaitForSeconds(3f);
         while(true)
         {
         GameObject EnemTri;
@@ -163,6 +164,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SpawnEnemLineTri()
     {
+        yield return new WaitForSeconds(3f);
+
         float posX;
         float posY;
         while(true)
@@ -186,7 +189,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator SpawnEnemBeamTri()
     {
-        while(true)
+        yield return new WaitForSeconds(3f);
+
+        while (true)
         {
         float posX = Random.Range(-1.5f, -1);
         float posY = 4.5f;
